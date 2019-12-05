@@ -1,3 +1,5 @@
 theme: jekyll-theme-slate
 show_downloads: false
 description: DATA, AI, Entrepreneurship
+github:
+  - is_project_page: false
