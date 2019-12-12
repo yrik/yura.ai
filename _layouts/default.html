@@ -15,12 +15,16 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          {% if site.github.is_project_page %}
-            <a id="forkme_banner" href="{{ site.github.repository_url }}">View on GitHub</a>
-          {% endif %}
 
-          <h1 id="project_title">{{ site.title | default: site.github.repository_name }}</h1>
-          <h2 id="project_tagline">{{ site.description | default: site.github.project_tagline }}</h2>
+          <div class="header-block">
+            <div class="image-block">
+              <img src="/img/ava.jpg" style="width: 200px"/>
+            </div>
+            <div class="image-block">
+              <h1 id="project_title">{{ site.title | default: site.github.repository_name }}</h1>
+              <h2 id="project_tagline">{{ site.description | default: site.github.project_tagline }}</h2>
+            </div>
+          </div>
 
           {% if site.show_downloads %}
             <section id="downloads">
@@ -58,5 +62,17 @@
         ga('send', 'pageview');
       </script>
     {% endif %}
+
+    <style>
+        .header-block {
+            display: flex;
+        }
+        .header-block .image-block {
+            flex: 1;
+        }
+        .header-block .text-block {
+            flex: 1;
+        }
+    </style>
   </body>
 </html>
