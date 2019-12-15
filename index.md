@@ -2,12 +2,17 @@
 title:  "Yura Kriachko - DATA, AI, Entrepreneurship"
 ---
 
-# Yura Kriachko
+### World is changing fast
+From **industrial revolution** that bring us democracy to **automation revolution** that moves more an more people into service industry from industrial.
 
-At school: winner of regional challendges in physics and math.
+### Data is the new oil
+Many of the new Biggest world companies are characterized by a very simple feature. They control information flows. Google, Facebook, Amazon - they earn money with ads. And **their ads are so poweverfull** because they know **when and what to show** for a user that he eventually buys proposed service or goods.
 
-Studied in top Ukrainian university: Taras Shevchenko National University of Kyiv. Master of Science, Applied Physics. Specialization: Automation of Scientific Research.
+### Future
+I believe in the future, where we have practical automation, opportunity embracement and freedom of time.
 
-Worked as Software Developer with focus on Python/Djnago. Founder of Software development studio 7WebPages. Works remotely last 10 years.
+### How can I help you?
+Innovations, web technologies, machine learning, data.
 
-Building path to freedom through online business. Data, AI, Python, Hardware.
+### Contacts
+hello@yura.ai
