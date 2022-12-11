@@ -7,12 +7,51 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Revolutionize Your Business with AI and Machine Learning from Yurik BV</title>
   <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  
+ <style>
+   .title {
+  animation: glitch 15s infinite;
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  1% {
+    transform: translate(2px, -2px);
+  }
+  2% {
+    transform: translate(-2px, 2px);
+  }
+  3% {
+    transform: translate(-2px, -2px);
+  }
+  4% {
+    transform: translate(2px, 2px);
+  }
+  5% {
+    transform: translate(0);
+  }
+}
+   
+.title:before,
+.title:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+ 
+ </style>
+  
 </head>
 
 <body class="bg-gradient-to-r from-teal-400 to-blue-500 max-w-4xl m-auto">
-  <h1 class="px-12 py-8 text-center text-white font-bold text-3xl">
+  <h1 class="px-12 py-8 text-center text-white font-bold text-3xl title">
     Revolutionize Your Business with AI and Machine Learning from Yurik BV
   </h1>
+  
+  
   <div class="md:px-12 py-8  bg-white rounded-lg shadow-lg">
     <h2 class="text-center text-2xl font-bold">
       Are you ready to unleash the power of AI and machine learning in your business?
