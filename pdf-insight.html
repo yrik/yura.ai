@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFinsight - File and Folder Analysis Tool</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        #intro {
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        #drop-zone {
+            border: 2px dashed #3498db;
+            border-radius: 20px;
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #3498db;
+            transition: all 0.3s ease;
+        }
+        #drop-zone:hover {
+            background-color: #ebf5fb;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        #footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #7f8c8d;
+        }
+        #folder-input {
+            display: none;
+        }
+        #folder-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>PDFinsight</h1>
+    
+    <div id="intro">
+        <p>Welcome to PDFinsight! This powerful tool is designed to help you analyze large numbers of PDF files quickly and efficiently. It provides valuable insights into the number of pages, word count, and language of each file.</p>
+        <p><strong>Privacy First:</strong> We take your privacy seriously. All files are processed locally on your computer and never leave your device. You can use PDFinsight with confidence, knowing that your sensitive documents remain secure.</p>
+        <p>To get started, simply drag and drop your PDF files onto the designated area below, or use the "Select Folder" button to choose a folder for bulk processing.</p>
+    </div>
+
+    <input type="file" id="folder-input" webkitdirectory directory multiple>
+    <label for="folder-input" id="folder-label">Select Folder</label>
+
+    <div id="drop-zone">
+        <p>Drop PDF files here</p>
+    </div>
+
+    <table id="result-table">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Pages</th>
+                <th>Words</th>
+                <th>Language Code</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div id="footer">
+        <p>PDFinsight is proudly made by <a href="https://yura.ai" target="_blank">yura.ai</a></p>
+    </div>
+
+    <script type="module">
+        import { franc } from 'https://esm.sh/franc@6?bundle';
+
+        const dropZone = document.getElementById('drop-zone');
+        const resultTable = document.getElementById('result-table').getElementsByTagName('tbody')[0];
+        const folderInput = document.getElementById('folder-input');
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        dropZone.addEventListener('drop', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const files = e.dataTransfer.files;
+            for (let file of files) {
+                if (file.type === 'application/pdf') {
+                    await processPDF(file);
+                } else {
+                    console.log(`File "${file.name}" is not a PDF and will be skipped.`);
+                }
+            }
+        });
+
+        folderInput.addEventListener('change', async (e) => {
+            const files = e.target.files;
+            for (let file of files) {
+                if (file.type === 'application/pdf') {
+                    await processPDF(file);
+                }
+            }
+        });
+
+        async function processPDF(file) {
+            const reader = new FileReader();
+            reader.onload = async function(event) {
+                const typedArray = new Uint8Array(event.target.result);
+                const pdf = await pdfjsLib.getDocument(typedArray).promise;
+                
+                let textContent = '';
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const text = await page.getTextContent();
+                    textContent += text.items.map(item => item.str).join(' ') + ' ';
+                }
+
+                const wordCount = textContent.trim().split(/\s+/).length;
+                const languageCode = detectLanguage(textContent);
+
+                addTableRow(file.name, pdf.numPages, wordCount, languageCode);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function addTableRow(fileName, pages, words, languageCode) {
+            const row = resultTable.insertRow();
+            row.insertCell(0).textContent = fileName;
+            row.insertCell(1).textContent = pages;
+            row.insertCell(2).textContent = words;
+            row.insertCell(3).textContent = languageCode;
+        }
+
+        function detectLanguage(text) {
+            return franc(text, {minLength: 3});
+        }
+    </script>
+</body>
+</html>
