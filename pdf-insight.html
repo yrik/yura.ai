@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,7 +62,7 @@
         #folder-input {
             display: none;
         }
-        #folder-label {
+        #folder-label, #clear-table {
             display: inline-block;
             padding: 10px 20px;
             background-color: #3498db;
@@ -69,6 +70,10 @@
             border-radius: 5px;
             cursor: pointer;
             margin-bottom: 20px;
+        }
+        #clear-table {
+            background-color: #e74c3c;
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -83,6 +88,7 @@
 
     <input type="file" id="folder-input" webkitdirectory directory multiple>
     <label for="folder-input" id="folder-label">Select Folder</label>
+    <button id="clear-table">Clear Table</button>
 
     <div id="drop-zone">
         <p>Drop PDF files here</p>
@@ -110,6 +116,7 @@
         const dropZone = document.getElementById('drop-zone');
         const resultTable = document.getElementById('result-table').getElementsByTagName('tbody')[0];
         const folderInput = document.getElementById('folder-input');
+        const clearTableButton = document.getElementById('clear-table');
 
         dropZone.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -136,6 +143,10 @@
                     await processPDF(file);
                 }
             }
+        });
+
+        clearTableButton.addEventListener('click', () => {
+            resultTable.innerHTML = '';
         });
 
         async function processPDF(file) {
