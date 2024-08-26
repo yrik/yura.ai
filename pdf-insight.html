@@ -1,11 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDFinsight - File and Folder Analysis Tool</title>
+    <title>FileInsight - PDF and DOCX Analysis Tool</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.9.359/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.21/mammoth.browser.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -78,12 +78,12 @@
     </style>
 </head>
 <body>
-    <h1>PDFinsight</h1>
+    <h1>FileInsight</h1>
     
     <div id="intro">
-        <p>Welcome to PDFinsight! This powerful tool is designed to help you analyze large numbers of PDF files quickly and efficiently. It provides valuable insights into the number of pages, word count, and language of each file.</p>
-        <p><strong>Privacy First:</strong> We take your privacy seriously. All files are processed locally on your computer and never leave your device. You can use PDFinsight with confidence, knowing that your sensitive documents remain secure.</p>
-        <p>To get started, simply drag and drop your PDF files onto the designated area below, or use the "Select Folder" button to choose a folder for bulk processing.</p>
+        <p>Welcome to FileInsight! This powerful tool is designed to help you analyze large numbers of PDF and DOCX files quickly and efficiently. It provides valuable insights into the number of pages, word count, and language of each file.</p>
+        <p><strong>Privacy First:</strong> We take your privacy seriously. All files are processed locally on your computer and never leave your device. You can use FileInsight with confidence, knowing that your sensitive documents remain secure.</p>
+        <p>To get started, simply drag and drop your PDF or DOCX files onto the designated area below, or use the "Select Folder" button to choose a folder for bulk processing.</p>
     </div>
 
     <input type="file" id="folder-input" webkitdirectory directory multiple>
@@ -91,13 +91,14 @@
     <button id="clear-table">Clear Table</button>
 
     <div id="drop-zone">
-        <p>Drop PDF files here</p>
+        <p>Drop PDF or DOCX files here</p>
     </div>
 
     <table id="result-table">
         <thead>
             <tr>
                 <th>File Name</th>
+                <th>Type</th>
                 <th>Pages</th>
                 <th>Words</th>
                 <th>Language Code</th>
@@ -107,7 +108,7 @@
     </table>
 
     <div id="footer">
-        <p>PDFinsight is proudly made by <a href="https://yura.ai" target="_blank">yura.ai</a></p>
+        <p>FileInsight is proudly made by <a href="https://yura.ai" target="_blank">yura.ai</a></p>
     </div>
 
     <script type="module">
@@ -130,8 +131,10 @@
             for (let file of files) {
                 if (file.type === 'application/pdf') {
                     await processPDF(file);
+                } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                    await processDOCX(file);
                 } else {
-                    console.log(`File "${file.name}" is not a PDF and will be skipped.`);
+                    console.log(`File "${file.name}" is not a PDF or DOCX and will be skipped.`);
                 }
             }
         });
@@ -141,6 +144,8 @@
             for (let file of files) {
                 if (file.type === 'application/pdf') {
                     await processPDF(file);
+                } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                    await processDOCX(file);
                 }
             }
         });
@@ -165,17 +170,36 @@
                 const wordCount = textContent.trim().split(/\s+/).length;
                 const languageCode = detectLanguage(textContent);
 
-                addTableRow(file.name, pdf.numPages, wordCount, languageCode);
+                addTableRow(file.name, 'PDF', pdf.numPages, wordCount, languageCode);
             };
             reader.readAsArrayBuffer(file);
         }
 
-        function addTableRow(fileName, pages, words, languageCode) {
+        async function processDOCX(file) {
+            const reader = new FileReader();
+            reader.onload = async function(event) {
+                const arrayBuffer = event.target.result;
+                const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+                const text = result.value;
+                
+                const wordCount = text.trim().split(/\s+/).length;
+                const languageCode = detectLanguage(text);
+                
+                // Estimate page count (rough estimate: 400 words per page)
+                const estimatedPages = Math.ceil(wordCount / 400);
+
+                addTableRow(file.name, 'DOCX', estimatedPages, wordCount, languageCode);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function addTableRow(fileName, fileType, pages, words, languageCode) {
             const row = resultTable.insertRow();
             row.insertCell(0).textContent = fileName;
-            row.insertCell(1).textContent = pages;
-            row.insertCell(2).textContent = words;
-            row.insertCell(3).textContent = languageCode;
+            row.insertCell(1).textContent = fileType;
+            row.insertCell(2).textContent = pages;
+            row.insertCell(3).textContent = words;
+            row.insertCell(4).textContent = languageCode;
         }
 
         function detectLanguage(text) {
