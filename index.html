@@ -44,6 +44,7 @@
       width: 100%;
       height: 100%;
       z-index: 0;
+      cursor: crosshair;
     }
 
     main {
@@ -524,6 +525,16 @@
 
       let target = randomTarget();
       moveAnnotation();
+
+      let lastUserClick = -Infinity;
+      const USER_PAUSE_MS = 30000;
+      window.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('a, button')) return;
+        target = { x: e.clientX, y: e.clientY, phase: target.phase };
+        lastUserClick = performance.now();
+        moveAnnotation();
+      });
+
       const FRAMES_PER_GEN = 360;
       let frame = 0;
       let gen = 0;
@@ -564,7 +575,10 @@
           bestEl.textContent = (best / FRAMES_PER_GEN).toFixed(2);
           evolve();
           for (const d of drones) d.reset();
-          if (gen % 3 === 0) { target = randomTarget(); moveAnnotation(); }
+          if (gen % 3 === 0 && performance.now() - lastUserClick > USER_PAUSE_MS) {
+            target = randomTarget();
+            moveAnnotation();
+          }
           frame = 0;
           ctx.fillStyle = 'rgba(6, 8, 13, 0.55)';
           ctx.fillRect(0, 0, W, H);
