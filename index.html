@@ -328,8 +328,9 @@
       class Drone {
         constructor(weights) { this.w = weights; this.reset(); }
         reset() {
-          this.x = W * (0.35 + Math.random() * 0.3);
-          this.y = H * (0.35 + Math.random() * 0.25);
+          const mobile = W < 640;
+          this.x = W * (mobile ? 0.15 + Math.random() * 0.7 : 0.35 + Math.random() * 0.3);
+          this.y = H * (mobile ? 0.04 + Math.random() * 0.22 : 0.35 + Math.random() * 0.25);
           this.vx = (Math.random() - 0.5) * 1.2;
           this.vy = (Math.random() - 0.5) * 1.2;
           this.theta = (Math.random() - 0.5) * 0.5;
@@ -516,9 +517,10 @@
       }
 
       function randomTarget() {
+        const mobile = W < 640;
         return {
-          x: W * (0.4 + Math.random() * 0.3),
-          y: H * (0.35 + Math.random() * 0.2),
+          x: W * (mobile ? 0.2 + Math.random() * 0.6 : 0.4 + Math.random() * 0.3),
+          y: H * (mobile ? 0.10 + Math.random() * 0.14 : 0.35 + Math.random() * 0.2),
           phase: Math.random() * Math.PI * 2
         };
       }
