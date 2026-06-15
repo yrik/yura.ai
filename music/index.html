@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <title>Auralis — moods in stereo</title>
+  <meta name="description" content="Pick a mood, get an endless playlist. A stereomood-style radio powered by the open Audius music network.">
+  <meta name="theme-color" content="#06080d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Auralis">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- social -->
+  <meta property="og:title" content="Auralis — moods in stereo">
+  <meta property="og:description" content="Pick a mood, get an endless playlist. Powered by Audius.">
+  <meta property="og:type" content="website">
+</head>
+<body>
+  <header>
+    <div class="logo" aria-hidden="true"></div>
+    <div class="brand">
+      <h1>Auralis</h1>
+      <p>moods in stereo</p>
+    </div>
+    <button id="installBtn" type="button">⬇ Install</button>
+  </header>
+
+  <section class="intro">
+    <h2>How do you <span class="g">feel</span> right now?</h2>
+    <p>Tap a mood and Auralis spins up an endless playlist — a love letter to the late, great <em>stereomood</em>, streaming free from the open <strong>Audius</strong> network.</p>
+  </section>
+
+  <main>
+    <div id="moods" class="moods" aria-label="Moods"></div>
+  </main>
+
+  <footer>
+    Music streamed from <a href="https://audius.org" target="_blank" rel="noopener">Audius</a>, the open-source decentralized music network · all tracks belong to their artists.<br>
+    A stereomood tribute · part of <a href="/">yura.ai</a>
+  </footer>
+
+  <!-- player -->
+  <div id="player" aria-label="Player">
+    <div id="progress" class="progress" role="slider" aria-label="Seek">
+      <div id="buf" class="buf"></div>
+      <div id="bar" class="bar"></div>
+    </div>
+    <div class="prow">
+      <div id="art" class="art" aria-hidden="true"></div>
+      <div class="meta">
+        <div id="ptitle" class="t">Pick a mood to start</div>
+        <div id="partist" class="a">— powered by Audius —</div>
+        <div id="time" class="time">0:00 / 0:00</div>
+      </div>
+      <div class="ctrls">
+        <button id="prev" class="prev" type="button" aria-label="Previous"></button>
+        <button id="play" class="play" type="button" aria-label="Play/Pause"></button>
+        <button id="next" class="next" type="button" aria-label="Next"></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
