@@ -1,6 +1,6 @@
 {
-  "name": "Auralis — moods in stereo",
-  "short_name": "Auralis",
+  "name": "yura.ai music — moods in stereo",
+  "short_name": "yura.ai music",
   "description": "Pick a mood, get an endless playlist. A stereomood-style radio powered by the open Audius music network.",
   "id": "/music/",
   "start_url": "./index.html",

@@ -1,7 +1,7 @@
-/* Auralis — a stereomood-style mood radio, powered by the open Audius network.
+/* yura.ai music — a stereomood-style mood radio, powered by the open Audius network.
    No API key required: Audius exposes a public, CORS-friendly HTTP API. */
 
-const APP = 'Auralis';
+const APP = 'yura.ai-music';
 
 /* Audius gateway + a few discovery-node fallbacks in case one is down. */
 const HOSTS = [
@@ -166,7 +166,7 @@ function load(track) {
   audio.src = streamUrl(track);
   audio.play().catch(() => {});
   updateMediaSession(track);
-  document.title = `${track.title} — Auralis`;
+  document.title = `${track.title} — yura.ai music`;
 }
 
 function next() {
@@ -198,7 +198,7 @@ function updateMediaSession(track) {
   navigator.mediaSession.metadata = new MediaMetadata({
     title: track.title || 'Untitled',
     artist: (track.user && track.user.name) || 'Audius',
-    album: currentMood ? `Auralis · ${currentMood.label}` : 'Auralis',
+    album: currentMood ? `yura.ai music · ${currentMood.label}` : 'yura.ai music',
     artwork: art ? [
       { src: art, sizes: '480x480', type: 'image/jpeg' },
       { src: art, sizes: '150x150', type: 'image/jpeg' }
@@ -289,7 +289,7 @@ installBtn.addEventListener('click', async () => {
 });
 window.addEventListener('appinstalled', () => {
   installBtn.style.display = 'none';
-  toast('✅ Installed! Launch Auralis from your home screen.');
+  toast('✅ Installed! Launch yura.ai music from your home screen.');
 });
 
 if ('serviceWorker' in navigator) {

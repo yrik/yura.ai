@@ -1,5 +1,5 @@
-// Auralis service worker — offline app shell, network-first for API & audio.
-const CACHE = 'auralis-v1';
+// yura.ai music service worker — offline app shell, network-first for API & audio.
+const CACHE = 'yura-music-v1';
 const SHELL = [
   './',
   './index.html',
