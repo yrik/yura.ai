@@ -1,0 +1,245 @@
+/* Сторінка Григорія Крячка — стиль успадковано від сайту 2000-х (writer.org.ua):
+   світло-блакитне тло, зелені заголовки, пастельні зелено-рожеві плашки, Times. */
+
+:root {
+  --bg: #F7FAFF;
+  --ink: #26313d;
+  --link: #446382;
+  --link-hover: #33679B;
+  --green: #1e7a1e;
+  --green-soft-bg: #f0fbdc;
+  --green-soft-border: #b7e389;
+  --pink-soft-bg: #fdf0fb;
+  --pink-soft-border: #eec3e4;
+  --card-border: #d9e4f2;
+  --muted: #6b7886;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.wrap {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+a { color: var(--link); text-decoration: none; }
+a:hover { color: var(--link-hover); text-decoration: underline; }
+
+/* Шапка */
+header.site {
+  text-align: center;
+  border-bottom: 3px double var(--green-soft-border);
+  padding-bottom: 18px;
+  margin-bottom: 26px;
+}
+
+.site-name {
+  font-size: 34px;
+  line-height: 1.15;
+  color: var(--green);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+.site-name a { color: var(--green); }
+.site-name a:hover { text-decoration: none; }
+
+.site-sub {
+  margin: 6px 0 0;
+  color: #576b7f;
+  font-style: italic;
+}
+
+.years { color: #78909c; font-style: normal; }
+
+nav.menu {
+  margin-top: 14px;
+  font-size: 16px;
+}
+nav.menu a {
+  display: inline-block;
+  padding: 3px 12px;
+  margin: 2px 1px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+}
+nav.menu a:hover {
+  background: var(--pink-soft-bg);
+  border-color: var(--pink-soft-border);
+  text-decoration: none;
+}
+nav.menu a.here {
+  background: var(--green-soft-bg);
+  border-color: var(--green-soft-border);
+  color: var(--green);
+}
+
+/* Заголовки */
+h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; }
+
+h1.page, h2.page {
+  color: var(--green);
+  text-align: center;
+  font-size: 27px;
+  letter-spacing: 0.03em;
+  margin: 8px 0 20px;
+}
+
+/* Плашки */
+.panel {
+  background: var(--green-soft-bg);
+  border: 1px solid var(--green-soft-border);
+  border-radius: 4px;
+  padding: 18px 20px;
+  margin: 18px 0;
+}
+
+.panel-pink {
+  background: var(--pink-soft-bg);
+  border: 1px solid var(--pink-soft-border);
+  border-radius: 4px;
+  padding: 16px 20px;
+  margin: 18px 0;
+}
+
+/* Вірші */
+.poem {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  padding: 26px 20px 20px;
+  margin: 26px 0;
+  text-align: center;
+}
+.poem h2 {
+  color: var(--green);
+  font-size: 21px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+.poem .note {
+  font-style: italic;
+  color: #9a6b93;
+  font-size: 14px;
+  margin: 0 0 14px;
+}
+.poem .verse {
+  white-space: pre-line;
+  line-height: 1.72;
+  margin: 0 auto;
+  max-width: 34em;
+}
+.poem .song-mark {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 14px;
+  color: #7a5a1e;
+  background: #fdf7e0;
+  border: 1px solid #ecd9a0;
+  border-radius: 3px;
+  padding: 1px 10px;
+}
+.poem img.illu {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--card-border);
+  border-radius: 3px;
+  margin: 14px auto 4px;
+  display: block;
+}
+
+/* Проза */
+.story {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  padding: 24px 26px;
+  margin: 26px 0;
+}
+.story h2 {
+  color: var(--green);
+  text-align: center;
+  font-size: 21px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+}
+.story .note {
+  text-align: center;
+  font-style: italic;
+  color: #9a6b93;
+  font-size: 14px;
+  margin: 0 0 14px;
+}
+.story p {
+  margin: 0 0 2px;
+  text-indent: 1.6em;
+  text-align: justify;
+}
+.story p.no-indent { text-indent: 0; }
+.story .ell { color: #78909c; font-style: italic; text-align: center; text-indent: 0; margin-top: 12px; }
+
+/* Зміст (перелік творів) */
+.toc {
+  columns: 2;
+  column-gap: 28px;
+  margin: 10px 0 6px;
+  padding: 0;
+  list-style: none;
+}
+.toc li { margin: 0 0 7px; break-inside: avoid; }
+.toc .hint { display: block; font-size: 13.5px; font-style: italic; color: #9a6b93; }
+
+/* Цитати у «Згадках» */
+blockquote {
+  margin: 0;
+  padding: 2px 0 2px 18px;
+  border-left: 3px solid var(--green-soft-border);
+  font-style: italic;
+}
+.who {
+  margin-top: 10px;
+  font-size: 15px;
+  color: #55606b;
+  text-align: right;
+}
+.who a { border-bottom: 1px dotted var(--link); }
+
+/* Дрібниці */
+.center { text-align: center; }
+.muted { color: #78909c; font-size: 15px; }
+hr.thin { border: none; border-top: 1px solid var(--card-border); margin: 26px 0; }
+
+.top-link {
+  display: block;
+  text-align: right;
+  font-size: 14px;
+  margin-top: -8px;
+}
+
+footer.site {
+  margin-top: 44px;
+  padding-top: 16px;
+  border-top: 3px double var(--green-soft-border);
+  font-size: 14.5px;
+  color: #6b7886;
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .toc { columns: 1; }
+  .site-name { font-size: 27px; }
+  .story { padding: 18px 16px; }
+}
